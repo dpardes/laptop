@@ -66,8 +66,7 @@ What it sets up
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [RVM]: https://rvm.io/
 [Bundler]: http://bundler.io/
-[Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
+[NVM]: https://github.com/creationix/nvm/
 [Grunt]: http://gruntjs.com/
 [Grunt Express Server]: https://github.com/ericclemmons/grunt-express-server/
 [Postgres]: http://www.postgresql.org/
