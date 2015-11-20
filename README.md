@@ -44,7 +44,7 @@ What it sets up
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Postgres] for storing relational data
 * [Redis] for storing key-value data
-* [Node.js] and [NPM] for running apps and installing JavaScript packages
+* [NVM] for running apps and installing JavaScript packages
 * [Grunt] for automating JavaScript tasks
 * [Grunt Express Server] for runing an Express Server via Grutn
 * [RVM] for managing Ruby environments
