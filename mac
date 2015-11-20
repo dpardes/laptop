@@ -170,7 +170,12 @@ brew_install_or_upgrade 'redis'
 fancy_echo 'Restarting redis...'
 brew services restart 'redis'
 
-brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'nvm'
+append_to_bashrc "export NVM_DIR=~/.nvm"
+append_to_bashrc "source $(brew --prefix nvm)/nvm.sh"
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
 #these are for Unstuck's web app
 npm install -g grunt grunt-cli
 npm install grunt-express-server
