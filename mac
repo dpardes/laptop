@@ -36,8 +36,6 @@ case "$SHELL" in
 	;;
 esac
 
-
-
 gem_install_or_update() {
   if gem list "$1" | grep "^$1 ("; then
     fancy_echo "Updating %s ..." "$1"
@@ -157,35 +155,26 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 brew_tap 'homebrew/services'
-brew_install_or_upgrade 'brew-services'
+brew_install_or_upgrade 'git'
 
 brew_install_or_upgrade 'bash-completion'
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'heroku-toolbelt'
+append_to_bashrc 'if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi'
 
 brew_install_or_upgrade 'postgresql'
 fancy_echo 'Restarting postgres...'
 brew services restart postgresql
 brew_install_or_upgrade 'redis'
-fancy_echo 'Restarting redis...'
 brew services restart 'redis'
 
 brew_install_or_upgrade 'nvm'
-append_to_bashrc "export NVM_DIR=~/.nvm"
-append_to_bashrc "source $(brew --prefix nvm)/nvm.sh"
+append_to_bashrc 'export NVM_DIR=~/.nvm'
+append_to_bashrc 'source $(brew --prefix nvm)/nvm.sh'
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
-#these are for Unstuck's web app
-npm install -g grunt grunt-cli
-npm install grunt-express-server
-
 brew_install_or_upgrade 'openssl'
-
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-
-append_to_bashrc "$HOME/.gemrc" 'gem: --no-document'
 
 if ! command -v rbenv >/dev/null; then
   if ! command -v rvm >/dev/null; then
@@ -204,7 +193,6 @@ if ! command -v rbenv >/dev/null; then
   fi
 fi
 
-#need to load what we just did :)
 source ~/.rvm/scripts/rvm
 
 #fancy_echo 'Updating Rubygems...'
@@ -216,22 +204,14 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-gem_install_or_update 'foreman'
-
+brew_install_or_upgrade 'heroku-toolbelt'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'brew-cask'
 brew_tap 'caskroom/versions'
 
-brew_cask_install_or_upgrade 'sublime-text3'
-brew_cask_install_or_upgrade 'rubymine'
-brew_cask_install_or_upgrade 'sourcetree'
-brew_cask_install_or_upgrade 'skitch'
-brew_cask_install_or_upgrade 'mamp'
-  
+brew_cask_install 'github'
+brew_cask_install 'sublime-text3'
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
-
-append_to_bashrc "$HOME/.rvmrc" 'rvm_auto_reload_flag=2'
-append_to_bashrc "$HOME/.rvm/gemsets/global.gems" 'bundler'
