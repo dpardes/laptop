@@ -12,10 +12,11 @@ Requirements
 
 We support:
 
-* [OS X Yosemite (10.10)](https://www.apple.com/osx/)
+* OS X Mavericks (10.9)
+* OS X Yosemite (10.10)
+* OS X El Capitan (10.11)
 
-Older versions may work but aren't regularly tested. Bug reports for older
-versions are welcome.
+Older versions may work but aren't regularly tested. 
 
 Install
 -------
@@ -23,7 +24,7 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/SYPartners/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/dpardes/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
@@ -34,6 +35,15 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
 If not, let us know.
+
+OS X El Capitan (10.11)
+-----------------------
+
+You may have problems installing Homebrew for the first time on OS X El
+Capitan due to permission changes to the /usr directory (within which the Homebrew
+installation is typically located). See the [Homebrew El Capitan troubleshooting instructions](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md)
+for steps to resolve the permissions issues that interfere with Homebrew's
+installation.
 
 What it sets up
 ---------------
