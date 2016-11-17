@@ -55,7 +55,6 @@ What it sets up
 * [Foreman] for managing web processes
 * [Homebrew Cask] for managing Mac applications distributed as binaries from the CLI
 * [Sublime] for editing text in a nice way
-* [Rubymine] for editing Ruby projects (and other stuff too)
 * [Sourcetree] for graphically managing Git
 * [Skitch] for quickly marking up pictures and screenshots
 * [MAMP] for an easy pre-configured/setup AMP stack
@@ -77,7 +76,6 @@ What it sets up
 [Ruby]: https://www.ruby-lang.org/en/
 [Homebrew Cask]: http://caskroom.io/
 [Sublime]: http://www.sublimetext.com/
-[Rubymine]: https://www.jetbrains.com/ruby/
 [Sourcetree]: https://www.sourcetreeapp.com/
 [Skitch]: https://evernote.com/skitch/
 [MAMP]: https://www.mamp.info/
