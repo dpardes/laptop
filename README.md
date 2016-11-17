@@ -50,6 +50,7 @@ What it sets up
 
 * [Homebrew] for managing operating system libraries
 * [Bash Completion] for typing faster
+* [Term] for controlling tabs from the command line
 * [Git] for version control
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Postgres] for storing relational data
@@ -70,6 +71,7 @@ What it sets up
 
 [Homebrew]: http://brew.sh/
 [Bash Completion]: http://bash-completion.alioth.debian.org/
+[Term]: https://github.com/liyanage/macosx-shell-scripts/blob/master/term
 [Git]: https://git-scm.com/
 [Foreman]: https://github.com/ddollar/foreman
 [Homebres Cask]: http://caskroom.io/

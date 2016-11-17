@@ -160,6 +160,8 @@ brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'bash-completion'
 append_to_bashrc 'if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi'
 
+brew_install_or_upgrade 'term'
+
 brew_install_or_upgrade 'postgresql'
 fancy_echo 'Restarting postgres...'
 brew services restart postgresql
