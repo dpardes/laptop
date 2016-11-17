@@ -36,15 +36,6 @@ Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
 If not, let us know.
 
-OS X El Capitan (10.11)
------------------------
-
-You may have problems installing Homebrew for the first time on OS X El
-Capitan due to permission changes to the /usr directory (within which the Homebrew
-installation is typically located). See the [Homebrew El Capitan troubleshooting instructions](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md)
-for steps to resolve the permissions issues that interfere with Homebrew's
-installation.
-
 What it sets up
 ---------------
 
