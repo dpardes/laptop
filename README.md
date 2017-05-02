@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an OS X laptop for web development. It's based on what [thoughtbot did here] (https://github.com/thoughtbot/laptop).
+Laptop is a script to set up an OS X laptop for web development. It's based on what [thoughtbot did here](https://github.com/thoughtbot/laptop).
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -10,11 +10,9 @@ based on what is already installed on the machine.
 Requirements
 ------------
 
-We support:
+I've tested this on:
 
-* OS X Mavericks (10.9)
-* OS X Yosemite (10.10)
-* OS X El Capitan (10.11)
+* OS X Sierra (10.12)
 
 Older versions may work but aren't regularly tested. 
 
