@@ -32,7 +32,7 @@ Debugging
 
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
-If not, let us know.
+If not, let me know; I might be able to help.
 
 What it sets up
 ---------------
@@ -46,7 +46,7 @@ What it sets up
 * [Redis] for storing key-value data
 * [NVM] for running apps and installing JavaScript packages
 * [Grunt] for automating JavaScript tasks
-* [Grunt Express Server] for runing an Express Server via Grutn
+* [Grunt Express Server] for runing an Express Server via Grunt
 * [RVM] for managing Ruby environments
 * [Ruby] stable for writing general-purpose code
 * [Bundler] for managing Ruby libraries
