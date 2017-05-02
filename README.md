@@ -12,7 +12,7 @@ Requirements
 
 I've tested this on:
 
-* OS X Sierra (10.12)
+* macOS Sierra (10.12)
 
 Older versions may work but aren't regularly tested. 
 
