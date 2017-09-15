@@ -44,6 +44,7 @@ What it sets up
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Postgres] for storing relational data
 * [Redis] for storing key-value data
+* [MongoDB] for storing document-oriented data
 * [NVM] for running apps and installing JavaScript packages
 * [Grunt] for automating JavaScript tasks
 * [Grunt Express Server] for runing an Express Server via Grunt
@@ -71,6 +72,7 @@ What it sets up
 [Grunt Express Server]: https://github.com/ericclemmons/grunt-express-server/
 [Postgres]: http://www.postgresql.org/
 [Redis]: http://redis.io/
+[MongoDB]: https://www.mongodb.com/
 [Ruby]: https://www.ruby-lang.org/en/
 [Homebrew Cask]: http://caskroom.io/
 [Sublime]: http://www.sublimetext.com/
