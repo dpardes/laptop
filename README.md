@@ -37,41 +37,62 @@ If not, let me know; I might be able to help.
 What it sets up
 ---------------
 
+macOS tools:
+
 * [Homebrew] for managing operating system libraries
+* [Homebrew Cask] for managing Mac applications distributed as binaries from the CLI
+
+[Homebrew]: http://brew.sh/
+[Homebrew Cask]: http://caskroom.io/
+
+Unix tools:
+
 * [Bash Completion] for typing faster
 * [Term] for controlling tabs from the command line
 * [Git] for version control
-* [Heroku Toolbelt] for interacting with the Heroku API
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
-* [MongoDB] for storing document-oriented data
-* [NVM] for running apps and installing JavaScript packages
-* [Grunt] for automating JavaScript tasks
-* [Grunt Express Server] for runing an Express Server via Grunt
-* [RVM] for managing Ruby environments
-* [Ruby] stable for writing general-purpose code
-* [Bundler] for managing Ruby libraries
-* [Foreman] for managing web processes
-* [Homebrew Cask] for managing Mac applications distributed as binaries from the CLI
-* [Sublime] for editing text in a nice way
+* [OpenSSL] for Transport Layer Security (TLS)
+* [LibYAML] is a YAML 1.1 parser and emitter needed by Ruby
+* [Watchman] for watching for filesystem events
 
-[Homebrew]: http://brew.sh/
 [Bash Completion]: http://bash-completion.alioth.debian.org/
 [Term]: https://github.com/liyanage/macosx-shell-scripts/blob/master/term
 [Git]: https://git-scm.com/
-[Foreman]: https://github.com/ddollar/foreman
-[Homebres Cask]: http://caskroom.io/
+[OpenSSL]: https://www.openssl.org/
+[LibYAML]: https://pyyaml.org/wiki/LibYAML
+[Watchman]: https://facebook.github.io/watchman/
+
+Heroku tools:
+
+* [Heroku Toolbelt] for interacting with the Heroku API
+
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
-[RVM]: https://rvm.io/
+
+Programming languages, package managers, and configuration:
+
+* [Bundler] for managing Ruby libraries
+* [Ruby] stable for writing general-purpose code
+* [RVM] for managing Ruby environments
+* [NVM] for running apps and installing JavaScript packages
+* [Saas] for writing useful CSS
+
 [Bundler]: http://bundler.io/
-[NVM]: https://github.com/creationix/nvm/
-[Grunt]: http://gruntjs.com/
-[Grunt Express Server]: https://github.com/ericclemmons/grunt-express-server/
-[Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
-[MongoDB]: https://www.mongodb.com/
 [Ruby]: https://www.ruby-lang.org/en/
-[Homebrew Cask]: http://caskroom.io/
+[RVM]: https://rvm.io/
+[NVM]: https://github.com/creationix/nvm/
+[Saas]: http://sass-lang.com/
+
+Databases:
+
+* [Postgres] for storing relational data
+* [MongoDB] for storing document-oriented data
+
+[Postgres]: http://www.postgresql.org/
+[MongoDB]: https://www.mongodb.com/
+
+Other tools:
+
+* [Sublime] for editing text in a nice way
+
 [Sublime]: http://www.sublimetext.com/
 
 It should take less than 15 minutes to install (depends on your machine).
@@ -89,11 +110,8 @@ For example:
 #!/bin/sh
 
 brew_cask_install_or_upgrade 'keepassx'
-brew_cask_install_or_upgrade 'filezilla'
 brew_cask_install_or_upgrade 'balsamiq-mockups'
 brew_cask_install_or_upgrade 'pandora'
-brew_cask_install_or_upgrade 'amazon-music'
-brew_cask_install_or_upgrade 'kindle'
 brew_cask_install_or_upgrade 'slack'
 brew_cask_install_or_upgrade 'dropbox'
 brew_cask_install_or_upgrade 'google-chrome'

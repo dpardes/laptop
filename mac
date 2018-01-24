@@ -165,8 +165,6 @@ brew_install_or_upgrade 'term'
 brew_install_or_upgrade 'postgresql'
 #fancy_echo 'Restarting postgres...'
 #brew services restart postgresql
-brew_install_or_upgrade 'redis'
-#brew services restart 'redis'
 brew_install_or_upgrade 'mongo'
 #brew services start mongod
 
@@ -203,12 +201,13 @@ source ~/.rvm/scripts/rvm
 gem update --system
 
 gem_install_or_update 'bundler'
-gem_install_or_update 'foreman'
-gem_install_or_update 'saas'
+#gem_install_or_update 'foreman'
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+
+gem_install_or_update 'saas'
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
