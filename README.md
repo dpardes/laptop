@@ -54,9 +54,6 @@ What it sets up
 * [Foreman] for managing web processes
 * [Homebrew Cask] for managing Mac applications distributed as binaries from the CLI
 * [Sublime] for editing text in a nice way
-* [Sourcetree] for graphically managing Git
-* [Skitch] for quickly marking up pictures and screenshots
-* [MAMP] for an easy pre-configured/setup AMP stack
 
 [Homebrew]: http://brew.sh/
 [Bash Completion]: http://bash-completion.alioth.debian.org/
@@ -76,9 +73,6 @@ What it sets up
 [Ruby]: https://www.ruby-lang.org/en/
 [Homebrew Cask]: http://caskroom.io/
 [Sublime]: http://www.sublimetext.com/
-[Sourcetree]: https://www.sourcetreeapp.com/
-[Skitch]: https://evernote.com/skitch/
-[MAMP]: https://www.mamp.info/
 
 It should take less than 15 minutes to install (depends on your machine).
 
