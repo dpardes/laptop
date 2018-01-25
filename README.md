@@ -74,12 +74,14 @@ Programming languages, package managers, and configuration:
 * [RVM] for managing Ruby environments
 * [NVM] for running apps and installing JavaScript packages
 * [Saas] for writing useful CSS
+* [Yarn] is a package manager
 
 [Bundler]: http://bundler.io/
 [Ruby]: https://www.ruby-lang.org/en/
 [RVM]: https://rvm.io/
 [NVM]: https://github.com/creationix/nvm/
 [Saas]: http://sass-lang.com/
+[Yarn]: https://yarnpkg.com/en/
 
 Databases:
 
