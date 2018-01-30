@@ -111,12 +111,23 @@ For example:
 
 #!/bin/sh
 
+brew_cask_install_or_upgrade 'spectacle'
+brew_cask_install_or_upgrade 'slack'
+brew_cask_install_or_upgrade 'sourcetree'
+brew_cask_install_or_upgrade 'skitch'
+brew_cask_install_or_upgrade 'sketch'
+brew_cask_install_or_upgrade 'mamp'
 brew_cask_install_or_upgrade 'keepassx'
+brew_cask_install_or_upgrade 'filezilla'
 brew_cask_install_or_upgrade 'balsamiq-mockups'
 brew_cask_install_or_upgrade 'pandora'
-brew_cask_install_or_upgrade 'slack'
+brew_cask_install_or_upgrade 'amazon-music'
+brew_cask_install_or_upgrade 'spotify'
+brew_cask_install_or_upgrade 'kindle'
 brew_cask_install_or_upgrade 'dropbox'
-brew_cask_install_or_upgrade 'google-chrome'
+brew_cask_install_or_upgrade 'android-file-transfer'
+brew_cask_install_or_upgrade 'vlc'
+brew_cask_install_or_upgrade 'muzzle'
 
 ```
 
