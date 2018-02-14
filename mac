@@ -11,8 +11,8 @@ append_to_bashrc() {
   local text="$1" bashrc
   local skip_new_line="${2:-0}"
 
-  if [ -w "$HOME/.bashrc.local" ]; then
-    bashrc="$HOME/.bashrc.local"
+  if [ -w "$HOME/.bash_profile" ]; then
+    bashrc="$HOME/.bash_profile"
   else
     bashrc="$HOME/.bashrc"
   fi
@@ -26,30 +26,51 @@ append_to_bashrc() {
   fi
 }
 
-mkdir -p $HOME/.bin
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+
+HOMEBREW_PREFIX="/usr/local"
+
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
+  fi
+else
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+fi
+
+update_shell() {
+  local shell_path;
+  shell_path="$(which bash)"
+
+  fancy_echo "Changing your shell to bash ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  sudo chsh -s "$shell_path" "$USER"
+}
 
 case "$SHELL" in
-	*/bash) : ;;
-	*)
-		fancy_echo "Changing your shell to bash ..."
-			chsh -s "$(which bash)"
-	;;
+  */bash)
+    if [ "$(which bash)" != '/bin/bash' ] ; then
+      update_shell
+    fi
+    ;;
+  *)
+    update_shell
+    ;;
 esac
 
 gem_install_or_update() {
-  if gem list "$1" | grep "^$1 ("; then
-    fancy_echo "Updating %s ..." "$1"
+  if gem list "$1" --installed > /dev/null; then
     gem update "$@"
   else
-    fancy_echo "Installing %s ..." "$1"
     gem install "$@"
   fi
-}
-
-app_is_installed() {
-  local app_name
-  app_name=$(echo "$1" | cut -d'-' -f1)
-  find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
 }
 
 #################################
@@ -151,8 +172,13 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
-fancy_echo "Updating Homebrew formulas ..."
-brew update
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
+fancy_echo "Updating Homebrew formulae ..."
+brew update --force # https://github.com/Homebrew/brew/issues/1151
 
 brew_tap 'homebrew/services'
 brew_install_or_upgrade 'git'
@@ -174,7 +200,7 @@ append_to_bashrc 'source $(brew --prefix nvm)/nvm.sh'
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
-brew_install_or_upgrade 'yarn --without-node'
+brew_install_or_upgrade 'yarn' '--without-node'
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
