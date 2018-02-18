@@ -50,52 +50,62 @@ Unix tools:
 * [Bash Completion] for typing faster
 * [Term] for controlling tabs from the command line
 * [Git] for version control
+* [Subversion] for more version control
 * [OpenSSL] for Transport Layer Security (TLS)
-* [LibYAML] is a YAML 1.1 parser and emitter needed by Ruby
 * [Watchman] for watching for filesystem events
 
 [Bash Completion]: http://bash-completion.alioth.debian.org/
 [Term]: https://github.com/liyanage/macosx-shell-scripts/blob/master/term
 [Git]: https://git-scm.com/
+[Subversion]: https://subversion.apache.org/
 [OpenSSL]: https://www.openssl.org/
-[LibYAML]: https://pyyaml.org/wiki/LibYAML
 [Watchman]: https://facebook.github.io/watchman/
 
 Heroku tools:
 
-* [Heroku Toolbelt] for interacting with the Heroku API
+* [Heroku CLI] for interacting with the Heroku API
 
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
+[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
 
 Programming languages, package managers, and configuration:
 
+* [LibYAML] is a YAML 1.1 parser and emitter needed by Ruby
+* [Yarn] is a package manager
+* [NVM] for running apps and installing JavaScript packages
+* [Java 8] for running big ol' Java apps
+* [Maven] for build automation
+* [Ant] to help build Java applications
 * [Bundler] for managing Ruby libraries
 * [Ruby] stable for writing general-purpose code
 * [RVM] for managing Ruby environments
-* [NVM] for running apps and installing JavaScript packages
 * [Saas] for writing useful CSS
-* [Yarn] is a package manager
 
+[LibYAML]: https://pyyaml.org/wiki/LibYAML
+[Yarn]: https://yarnpkg.com/en/
+[NVM]: https://github.com/creationix/nvm/
+[Java 8]: http://www.oracle.com/technetwork/java/javase/jdk-8-readme-2095712.html
+[Maven]: http://maven.apache.org/
+[Ant]: http://ant.apache.org/
 [Bundler]: http://bundler.io/
 [Ruby]: https://www.ruby-lang.org/en/
 [RVM]: https://rvm.io/
-[NVM]: https://github.com/creationix/nvm/
 [Saas]: http://sass-lang.com/
-[Yarn]: https://yarnpkg.com/en/
+
+Servers:
+
+* [Tomcat 8] is a "pure Java" HTTP web server environment in which Java code can run.
+
+[Tomcat 8]: https://tomcat.apache.org/
 
 Databases:
 
 * [Postgres] for storing relational data
 * [MongoDB] for storing document-oriented data
+* [Elasticsearch] for RESTful search and analytics
 
 [Postgres]: http://www.postgresql.org/
 [MongoDB]: https://www.mongodb.com/
-
-Other tools:
-
-* [Sublime] for editing text in a nice way
-
-[Sublime]: http://www.sublimetext.com/
+[Elasticsearch]: https://www.elastic.co/products/elasticsearch
 
 It should take less than 15 minutes to install (depends on your machine).
 

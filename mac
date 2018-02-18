@@ -30,6 +30,14 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+if [ ! -d "$HOME/work/svn/maven/" ]; then
+  mkdir -p "$HOME/work/svn/maven/"
+fi
+
+if [ ! -d "$HOME/work/git/maven/" ]; then
+  mkdir -p "$HOME/work/git/maven/"
+fi
+
 HOMEBREW_PREFIX="/usr/local"
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
@@ -73,90 +81,6 @@ gem_install_or_update() {
   fi
 }
 
-#################################
-# Homebrew functions start here #
-#################################
-brew_install_or_upgrade() {
-  if brew_is_installed "$1"; then
-    if brew_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      brew upgrade "$@"
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
-  else
-    fancy_echo "Installing %s ..." "$1"
-    brew install "$@"
-  fi
-}
-
-brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$name"
-}
-
-brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
-
-  ! brew outdated --quiet "$name" >/dev/null
-}
-
-brew_tap() {
-  brew tap "$1" 2> /dev/null
-}
-
-brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
-
-brew_launchctl_restart() {
-  local name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
-
-  fancy_echo "Restarting %s ..." "$1"
-  mkdir -p "$HOME/Library/LaunchAgents"
-  ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
-
-  if launchctl list | grep -Fq "$domain"; then
-    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
-  fi
-  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
-}
-###############################
-# Homebrew functions end here #
-###############################
-
-######################################
-# Homebrew Cask functions start here #
-######################################
-brew_cask_expand_alias() {
-  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
-
-brew_cask_is_installed() {
-  local NAME=$(brew_cask_expand_alias "$1")
-  brew cask list -1 | grep -Fqx "$NAME"
-}
-
-brew_cask_install() {
-  if ! brew_cask_is_installed "$1"; then
-    brew cask install "$@"
-  fi
-}
-
-brew_cask_install_or_upgrade() {
-  if brew_cask_is_installed "$1"; then
-    echo "$1 is already installed, brew cask upgrade is not yet implemented"
-  else
-    brew cask install "$@"
-  fi
-}
-####################################
-# Homebrew Cask functions end here #
-####################################
-
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -179,43 +103,92 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
+brew bundle --verbose --file=- <<EOF
+tap "homebrew/services"
+tap "caskroom/cask"
+tap "caskroom/versions"
 
-brew_tap 'homebrew/services'
-brew_install_or_upgrade 'git'
+# Unix
+brew "bash-completion"
+brew "term"
+brew "git"
+brew "subversion", args: ["with-java"]
+brew "openssl"
+brew "watchman"
 
-brew_install_or_upgrade 'bash-completion'
-append_to_bashrc 'if [ -f $(brew --prefix)/etc/bash_completion ]; then . $(brew --prefix)/etc/bash_completion; fi'
+# Heroku
+brew "heroku"
 
-brew_install_or_upgrade 'term'
+# Programming language prerequisites and package managers
+brew "libyaml" # should come after openssl
+brew "yarn", args: ["--without node"]
+brew "nvm"
+cask "java8"
+brew "maven"
+brew "ant"
 
-brew_install_or_upgrade 'postgresql'
-#fancy_echo 'Restarting postgres...'
-#brew services restart postgresql
-brew_install_or_upgrade 'mongo'
-#brew services start mongod
+# Servers
+brew "tomcat@8"
 
-brew_install_or_upgrade 'nvm'
-append_to_bashrc 'export NVM_DIR=~/.nvm'
-append_to_bashrc 'source $(brew --prefix nvm)/nvm.sh'
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+# Databases
+brew "postgres", restart_service: :changed
+brew "mongo", restart_service: :changed
+brew "elasticsearch", restart_service: :changed
 
-brew_install_or_upgrade 'yarn' '--without-node'
+# Other tools
+EOF
 
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
+# for bash completion
+fancy_echo "Adding bash completion details to bashrc..."
+append_to_bashrc "[ -f $HOMEBREW_PREFIX/etc/bash_completion ] && . $HOMEBREW_PREFIX/etc/bash_completion"
+
+# for nvm
+fancy_echo "Adding nvm details to bashrc..."
+append_to_bashrc 'export NVM_DIR="$HOME/.nvm"'
+append_to_bashrc 'source $(brew --prefix nvm)/nvm.sh' 1
+
+# finish Maven/Ant setup
+fancy_echo "Increasing the Java heap space..."
+append_to_bashrc 'export MAVEN_OPTS="-Xmx2048m -Xms512m -XX:MaxPermSize=512m"'
+fancy_echo "Install Maven Ant-tasks plugin..."
+if [ ! -f "$HOME/.ant/lib/maven-ant-tasks-2.1.3.jar" ]; then
+  if [ ! -d "$HOME/.ant/lib" ]; then
+    mkdir -p "$HOME/.ant/lib"
+  fi
+  curl -o ~/.ant/lib/maven-ant-tasks-2.1.3.jar http://repo2.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar
+fi
+if [ $(md5 -q ~/.ant/lib/maven-ant-tasks-2.1.3.jar) != "7ce48382d1aa4138027a58ec2f29beda" ]; then
+  fancy_echo "Maven Ant-tasks plugin was NOT successfully installed"
+fi
+append_to_bashrc "export ANT_HOME=$(brew --prefix ant)" 1
+append_to_bashrc "export M2_HOME=$(brew --prefix maven)" 1
+append_to_bashrc 'export M2="$M2_HOME/bin"' 1
+append_to_bashrc "export MAVEN_OPTS=\"-Xmx2048m -Xms512m -Dorg.apache.maven.user-settings=$HOME/work/svn/setup/maven/settings.xml -Djava.net.preferIPv4Addresses=true\"" 1
+append_to_bashrc "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home" 1
+append_to_bashrc "export CATALINA_BASE=$(brew --prefix tomcat@8)/libexec" 1
+append_to_bashrc 'export CATALINA_HOME="$CATALINA_BASE"' 1
+append_to_bashrc "export CATALINA_TMPDIR=$CATALINA_BASE/temp" 1
+append_to_bashrc "export QAPP_CONF_DIR=$CATALINA_BASE/conf" 1
+
+append_to_bashrc 'export PATH="$ANT_HOME/bin:$PATH"' 1
+append_to_bashrc 'export PATH="$M2:$PATH"' 1
+append_to_bashrc 'export PATH="$JAVA_HOME/bin:$PATH"' 1
+append_to_bashrc 'export PATH="$PATH:~/temp"' 1
+
+fancy_echo "Update heroku binary..."
+brew unlink heroku
+brew link --force heroku
 
 if ! command -v rbenv >/dev/null; then
   if ! command -v rvm >/dev/null; then
-    fancy_echo 'Installing RVM and the latest Ruby...'
+    fancy_echo "Installing RVM and the latest Ruby..."
     curl -sSL https://get.rvm.io | bash -s stable --ruby --auto-dotfiles --autolibs=enable
     . ~/.rvm/scripts/rvm
   else
     local_version="$(rvm -v 2> /dev/null | awk '$2 != ""{print $2}')"
     latest_version="$(curl -s https://raw.githubusercontent.com/wayneeseguin/rvm/stable/VERSION)"
     if [ "$local_version" != "$latest_version" ]; then
-      fancy_echo 'Upgrading RVM...'
+      fancy_echo "Upgrading RVM..."
       rvm get stable --auto-dotfiles --autolibs=enable --with-gems="bundler"
     else
       fancy_echo "Already using the latest version of RVM. Skipping..."
@@ -223,27 +196,19 @@ if ! command -v rbenv >/dev/null; then
   fi
 fi
 
-source ~/.rvm/scripts/rvm
-
-#fancy_echo 'Updating Rubygems...'
 gem update --system
-
 gem_install_or_update 'bundler'
-#gem_install_or_update 'foreman'
-
-fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
 
 gem_install_or_update 'saas'
 
-brew_install_or_upgrade 'heroku-toolbelt'
-
-brew_tap 'caskroom/cask'
-brew_tap 'caskroom/versions'
-
-brew_cask_install 'sublime-text'
-
 if [ -f "$HOME/.laptop.local" ]; then
+  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Cleaning up old Homebrew formulae ..."
+brew cleanup
+brew cask cleanup
