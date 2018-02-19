@@ -143,15 +143,6 @@ cask "onedrive"
 cask "mamp"
 EOF
 
-fancy_echo "Adding SVN AutoProps Configurations..."
-
-if [ ! -f "$HOME/.subversion/config" ]; then
-  fancy_echo "Updating dotfiles ..."
-  cd ~/work/svn
-  svn checkout https://repos.wsgc.com/svn/core/setup/
-  mv ~/work/svn/setup/config ~/.subversion/config
-fi
-
 ```
 
 Write your customizations such that they can be run safely more than once.
