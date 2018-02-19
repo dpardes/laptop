@@ -121,30 +121,41 @@ For example:
 
 #!/bin/sh
 
-brew_cask_install_or_upgrade 'spectacle'
-brew_cask_install_or_upgrade 'slack'
-brew_cask_install_or_upgrade 'sourcetree'
-brew_cask_install_or_upgrade 'skitch'
-brew_cask_install_or_upgrade 'sketch'
-brew_cask_install_or_upgrade 'mamp'
-brew_cask_install_or_upgrade 'keepassx'
-brew_cask_install_or_upgrade 'filezilla'
-brew_cask_install_or_upgrade 'balsamiq-mockups'
-brew_cask_install_or_upgrade 'pandora'
-brew_cask_install_or_upgrade 'amazon-music'
-brew_cask_install_or_upgrade 'spotify'
-brew_cask_install_or_upgrade 'kindle'
-brew_cask_install_or_upgrade 'dropbox'
-brew_cask_install_or_upgrade 'android-file-transfer'
-brew_cask_install_or_upgrade 'vlc'
-brew_cask_install_or_upgrade 'muzzle'
+brew bundle --file=- <<EOF
+cask "sublime-text"
+cask "spectacle"
+cask "slack"
+cask "sourcetree"
+cask "skitch"
+cask "sketch"
+cask "keepassx"
+cask "cyberduck"
+cask "balsamiq-mockups"
+cask "pandora"
+cask "amazon-music"
+cask "spotify"
+cask "kindle"
+cask "dropbox"
+cask "android-file-transfer"
+cask "vlc"
+cask "muzzle"
+cask "onedrive"
+cask "mamp"
+EOF
+
+fancy_echo "Adding SVN AutoProps Configurations..."
+
+if [ ! -f "$HOME/.subversion/config" ]; then
+  fancy_echo "Updating dotfiles ..."
+  cd ~/work/svn
+  svn checkout https://repos.wsgc.com/svn/core/setup/
+  mv ~/work/svn/setup/config ~/.subversion/config
+fi
 
 ```
 
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
-Laptop functions such as `fancy_echo`,
-`brew_install_or_upgrade`, `brew_cask_install_or_upgrade`, and
-`gem_install_or_update`
+Laptop functions such as `fancy_echo` and `gem_install_or_update`
 can be used in your `~/.laptop.local`.
