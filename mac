@@ -160,15 +160,19 @@ fi
 if [ $(md5 -q ~/.ant/lib/maven-ant-tasks-2.1.3.jar) != "7ce48382d1aa4138027a58ec2f29beda" ]; then
   fancy_echo "Maven Ant-tasks plugin was NOT successfully installed"
 fi
-fancy_echo "Adding SVN AutoProps Configurations..."
 if [ ! -f "$HOME/.subversion/config" ]; then
-  fancy_echo "Updating dotfiles ..."
+  fancy_echo "Adding SVN AutoProps Configurations..."
   cd ~/work/svn
   svn checkout https://repos.wsgc.com/svn/core/setup/
   mv ~/work/svn/setup/config ~/.subversion/config
 fi
-fancy_echo "Copy WSI maven settings to local..."
-mv ~/work/svn/setup/maven/settings.xml ~/.m2/settings.xml
+if [ ! -d "$HOME/.m2" ]; then
+    mkdir -p "$HOME/.m2"
+fi
+if [ ! -f "$HOME/.m2/settings.xml" ]; then
+  fancy_echo "Copy WSI maven settings to local..."
+  mv ~/work/svn/setup/maven/settings.xml ~/.m2/settings.xml
+fi
 
 append_to_bashrc "export ANT_HOME=$(brew --prefix ant)" 1
 append_to_bashrc "export M2_HOME=$(brew --prefix maven)" 1
