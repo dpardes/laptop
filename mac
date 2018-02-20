@@ -178,7 +178,6 @@ if [ ! -f "$HOME/.m2/settings.xml" ]; then
   mv ~/work/svn/setup/maven/settings.xml ~/.m2/settings.xml
 fi
 
-append_to_bashrc "export ANT_HOME=$(brew --prefix ant)" 1
 append_to_bashrc "export M2_HOME=$(brew --prefix maven)" 1
 append_to_bashrc 'export M2="$M2_HOME/bin"' 1
 append_to_bashrc "export MAVEN_OPTS=\"-Xmx2048m -Xms512m -Dorg.apache.maven.user-settings=$HOME/work/svn/setup/maven/settings.xml -Djava.net.preferIPv4Addresses=true\"" 1
@@ -187,8 +186,6 @@ append_to_bashrc "export CATALINA_BASE=$(brew --prefix tomcat@8)/libexec" 1
 append_to_bashrc 'export CATALINA_HOME="$CATALINA_BASE"' 1
 append_to_bashrc "export CATALINA_TMPDIR=$CATALINA_BASE/temp" 1
 append_to_bashrc "export QAPP_CONF_DIR=$CATALINA_BASE/conf" 1
-
-append_to_bashrc 'export PATH="$ANT_HOME/bin:$PATH"' 1
 append_to_bashrc 'export PATH="$M2:$PATH"' 1
 append_to_bashrc 'export PATH="$JAVA_HOME/bin:$PATH"' 1
 append_to_bashrc 'export PATH="$PATH:~/temp"' 1
