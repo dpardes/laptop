@@ -147,9 +147,14 @@ fancy_echo "Adding nvm details to bashrc..."
 append_to_bashrc 'export NVM_DIR="$HOME/.nvm"'
 append_to_bashrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
+export NVM_DIR="$HOME/.nvm"
+
+# Unsetting trap for nvm only - https://github.com/creationix/nvm/issues/1484 
+set +e
+. $(brew --prefix nvm)/nvm.sh
 # setup node v7.0.0 for WSI
-nvm install v7.0.0
-nvm alias default v7.0.0
+nvm install 7.0.0
+set -e
 
 # finish Maven/Ant setup
 fancy_echo "Increasing the Java heap space..."
