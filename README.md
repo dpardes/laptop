@@ -118,10 +118,12 @@ Databases:
 * [Postgres] for storing relational data
 * [MongoDB] for storing document-oriented data
 * [Elasticsearch] for RESTful search and analytics
+* [Redis] for powering our caches
 
 [Postgres]: http://www.postgresql.org/
 [MongoDB]: https://www.mongodb.com/
 [Elasticsearch]: https://www.elastic.co/products/elasticsearch
+[Redis]: https://redis.io/
 
 It should take less than 15 minutes to install (depends on your machine).
 

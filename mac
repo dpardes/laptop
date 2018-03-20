@@ -81,6 +81,9 @@ gem_install_or_update() {
   fi
 }
 
+fancy_echo "Showing hidden files in Finder..."
+defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -134,6 +137,7 @@ brew "tomcat@8"
 brew "postgres", restart_service: :changed
 brew "mongo", restart_service: :changed
 brew "elasticsearch@2.4", restart_service: :changed
+brew "redis", restart_service: :changed
 
 # Other tools
 EOF
